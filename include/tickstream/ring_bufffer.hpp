@@ -1,0 +1,6 @@
+// Created by @bodeby on 03/10/2025.
+
+#ifndef TICKSTREAM_RING_BUFFFER_H
+#define TICKSTREAM_RING_BUFFFER_H
+
+#endif //TICKSTREAM_RING_BUFFFER_H
