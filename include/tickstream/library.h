@@ -1,0 +1,6 @@
+#ifndef TICKSTREAM_LIBRARY_H
+#define TICKSTREAM_LIBRARY_H
+
+void hello();
+
+#endif // TICKSTREAM_LIBRARY_H
