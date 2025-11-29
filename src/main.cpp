@@ -7,32 +7,38 @@
 #include <tickstream/params.hpp>
 #include <tickstream/stream_gen.hpp>
 
-void tick_btc()
+using tickstream::Tick; // make tick generally available
+
+Tick tick_btc()
 {
-    auto ts1 = tickstream::Tick();
-    ts1.symbol = "bitcoin";
-    ts1.price = 119200.0;
-    ts1.seq = 0;
-    ts1.ts = std::chrono::steady_clock::now();
-    ts1.regime = 0;
+    auto tick = Tick();
+    tick.symbol = "bitcoin";
+    tick.price = 119200.0;
+    tick.seq = 0;
+    tick.ts = std::chrono::steady_clock::now();
+    tick.regime = 0;
 
-    std::cout << "Latest tick: " << ts1.price << std::endl;
-}
+    std::cout << "Latest tick: " << tick.price << std::endl;
 
-void tick_eth()
+    return tick;
+};
+
+Tick tick_eth()
 {
-    auto ts2 = tickstream::Tick();
-    ts2.symbol = "ethereum";
-    ts2.price = 4099.71;
-    ts2.seq = 0;
-    ts2.ts = std::chrono::steady_clock::now();
-    ts2.regime = 0;
+    auto tick = Tick();
+    tick.symbol = "ethereum";
+    tick.price = 4099.71;
+    tick.seq = 0;
+    tick.ts = std::chrono::steady_clock::now();
+    tick.regime = 0;
 
-    std::cout << "Latest tick: " << ts2.price << std::endl;
-}
+    std::cout << "Latest tick: " << tick.price << std::endl;
+
+    return tick;
+};
 
 int main()
 {
-    tick_btc();
-    tick_eth();
-}
+    Tick _tick_1 = tick_btc();
+    Tick _tick_2 = tick_eth();
+};
