@@ -4,6 +4,7 @@
 #define TICKSTREAM_STREAM_GEN_H
 
 #pragma once
+
 #include <cstddef>
 #include <functional>
 #include <memory>
@@ -15,14 +16,14 @@
 namespace tickstream {
 
     /// SPSC ring buffer concept for decoupled producer/consumer.
-    template <typename T>
-    class RingBuffer {
-    public:
-        virtual ~RingBuffer() = default;
-        virtual bool try_push(const T& item) = 0; // non-blocking, lock-free friendly
-        virtual std::size_t capacity() const = 0;
-        virtual std::size_t size() const = 0;
-    };
+    // template <typename T>
+    // class RingBuffer {
+    // public:
+    //     virtual ~RingBuffer() = default;
+    //     virtual bool try_push(const T& item) = 0; // non-blocking, lock-free friendly
+    //     virtual std::size_t capacity() const = 0;
+    //     virtual std::size_t size() const = 0;
+    // };
 
     /// Pseudo tick stream engine. pImpl hides model details.
     class StreamGen {
@@ -43,7 +44,7 @@ namespace tickstream {
         void run(const std::function<void(const Tick&)>& sink, std::size_t count = 0);
 
         // Push into a user-supplied SPSC ring buffer.
-        void run_to_ring(RingBuffer<Tick>& rb, std::size_t count = 0);
+        // void run_to_ring(RingBuffer<Tick>& rb, std::size_t count = 0);
 
         // Control
         void set_rate_hz(double hz);
