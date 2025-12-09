@@ -3,10 +3,11 @@
 #include <iostream>
 #include <ostream>
 
+// internal includes
 #include <tickstream/tick.hpp>
 #include <tickstream/params.hpp>
 #include <tickstream/stream_gen.hpp>
-#include <tickstream/ring_buffer/ring_bufffer.hpp>
+#include <tickstream/ring_bufffer.hpp>
 
 using tickstream::Tick; // make tick generally available
 using tickstream::RingBuffer; // make ring buffer generally available
@@ -41,7 +42,8 @@ Tick tick_eth()
 
 int main()
 {
-    RingBuffer<Tick> ring_buffer(1024);
+    RingBuffer<Tick> ring_buffer(1024); // Create a ring buffer with capacity 1024 (stack allocated)
+
 
     Tick tick_1 = tick_btc();
     Tick tick_2 = tick_eth();
@@ -64,6 +66,4 @@ int main()
     ring_buffer.clear(); // Clear the buffer
     std::cout << "Ring buffer size after clear: " << ring_buffer.size() << std::endl;
     std::cout << "Popped tick price: " << tick_1.price << std::endl;
-
-
 };
