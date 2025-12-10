@@ -1,9 +1,7 @@
-// Created by @bodeby on 03/10/2025.
-
-#ifndef TICKSTREAM_PARAMS_H
-#define TICKSTREAM_PARAMS_H
+// include/tickstream/params.hpp
 
 #pragma once
+
 #include <string>
 #include <vector>
 #include <cstdint>
@@ -42,5 +40,3 @@ namespace tickstream {
     };
 
 } // namespace tickstream
-
-#endif //TICKSTREAM_PARAMS_H

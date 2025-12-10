@@ -1,13 +1,10 @@
-// Created by @bodeby on 08/12/2025.
-
-#ifndef TICKSTREAM_RING_BUFFFER_H
-#define TICKSTREAM_RING_BUFFFER_H
+// include/tickstream/ring_bufffer.hpp
 
 #pragma once
 
-#include <vector>
-#include <atomic>
-#include <cstddef>
+#include <atomic>    // dor thread-safe sequence counter
+#include <vector>    // buffer for batch processing
+#include <cstddef>   // for std::size_t (portable size type)
 
 namespace tickstream
 {
@@ -84,5 +81,3 @@ namespace tickstream
     };
 
 }
-
-#endif // TICKSTREAM_RING_BUFFFER_H

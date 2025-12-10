@@ -1,9 +1,8 @@
-
-#ifndef TICKSTREAM_CONSUMER_H
-#define TICKSTREAM_CONSUMER_H
+// include/tickstream/consumer.hpp
 
 #pragma once
 
-namespace tickstream {}
+namespace tickstream {
+    class Consumer;
+}
 
-#endif // TICKSTREAM_CONSUMER_H

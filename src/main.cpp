@@ -7,7 +7,7 @@
 #include <tickstream/tick.hpp>
 #include <tickstream/params.hpp>
 #include <tickstream/stream_gen.hpp>
-#include <tickstream/ring_bufffer.hpp>
+#include <tickstream/ring_buffer.hpp>
 
 using tickstream::Tick; // make tick generally available
 using tickstream::RingBuffer; // make ring buffer generally available
@@ -21,8 +21,6 @@ Tick tick_btc()
     tick.ts = std::chrono::steady_clock::now();
     tick.regime = 0;
 
-    std::cout << "Latest tick: " << tick.price << std::endl;
-
     return tick;
 };
 
@@ -35,8 +33,6 @@ Tick tick_eth()
     tick.ts = std::chrono::steady_clock::now();
     tick.regime = 0;
 
-    std::cout << "Latest tick: " << tick.price << std::endl;
-
     return tick;
 };
 
@@ -44,9 +40,13 @@ int main()
 {
     RingBuffer<Tick> ring_buffer(1024); // Create a ring buffer with capacity 1024 (stack allocated)
 
-
+    // create a sample price tick: bitcoin
     Tick tick_1 = tick_btc();
+    std::cout << "created tick: " << tick_1.price << "\n";
+
+    // creete a sample price tick: ethereum
     Tick tick_2 = tick_eth();
+    std::cout << "created tick: " << tick_2.price << "\n";
 
     bool pushed_1 = ring_buffer.try_push(tick_1);
     bool pushed_2 = ring_buffer.try_push(tick_2);

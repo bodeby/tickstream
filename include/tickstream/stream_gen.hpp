@@ -1,12 +1,9 @@
 // Created by @bodeby on 03/10/2025.
 
-#ifndef TICKSTREAM_STREAM_GEN_H
-#define TICKSTREAM_STREAM_GEN_H
-
 #pragma once
 
-#include <cstddef>
 #include <functional>
+#include <cstddef>
 #include <memory>
 #include <string>
 #include <vector>
@@ -57,7 +54,4 @@ namespace tickstream {
         struct Impl;
         std::unique_ptr<Impl> p_;
     };
-
-} // namespace tickstream
-
-#endif //TICKSTREAM_STREAM_GEN_H
+}

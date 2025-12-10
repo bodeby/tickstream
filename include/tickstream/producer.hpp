@@ -1,15 +1,12 @@
-// tickstream/ring_buffer/producer.hpp
-
-#ifndef TICKSTREAM_PRODUCER_H
-#define TICKSTREAM_PRODUCER_H
+// include/tickstream/producer.hpp
 
 #pragma once
 
-#include "ring_buffer.hpp"
-#include "tick.hpp"
 #include <thread>
 #include <functional>
+#include "ring_buffer.hpp"
+#include "tick.hpp"
 
-namespace tickstream {}
-
-#endif // TICKSTREAM_PRODUCER_H
+namespace tickstream {
+    class Producer;
+}
