@@ -8,12 +8,14 @@
 
 namespace tickstream {
 
-    /// Configuration knobs with safe defaults.
+    /* Configuration knobs with safe defaults */
+
     struct Params {
+        
         // Universe and scheduling
-        std::vector<std::string> symbols{"AAPL"};
-        double rate_hz{10.0};                // target ticks per second (per stream)
+        std::vector<std::string> symbols{"AAPL"}; // might not be needed
         std::uint64_t seed{0};               // 0 => random_device
+        double rate_hz{10.0};                // target ticks per second (per stream)
 
         // OU drift: dX = kappa*(mu - X) dt + sigma_{regime} dW + J
         double mu{100.0};

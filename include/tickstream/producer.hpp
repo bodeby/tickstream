@@ -8,5 +8,7 @@
 #include "tick.hpp"
 
 namespace tickstream {
+
+    template <typename T>
     class Producer;
 }

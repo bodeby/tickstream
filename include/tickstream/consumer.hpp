@@ -3,6 +3,8 @@
 #pragma once
 
 namespace tickstream {
+
+    template <typename T>
     class Consumer;
 }
 
