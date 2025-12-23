@@ -14,6 +14,8 @@ TEST_CASE("Tick Creation Test", "[tick]")
 
     REQUIRE(tick_1.symbol == "BTC-USD");
     REQUIRE(tick_2.symbol == "BTC-USD");
+    REQUIRE(tick_1.unix_ts_ns > 0);
+    REQUIRE(tick_2.unix_ts_ns > 0);
     REQUIRE(tick_1.price > 0);
     REQUIRE(tick_2.price > 0);
 }
