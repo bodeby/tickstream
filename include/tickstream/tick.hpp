@@ -52,10 +52,12 @@ namespace tickstream {
     inline Tick tick_btc() {
         using namespace std::chrono;
 
+        // get current timestamp: system clock 
         auto sys_raw = time_point_cast<nanoseconds>(system_clock::now())
                         .time_since_epoch()
                         .count();
 
+        // get current timestamp: steady clock                
         auto mono_raw = time_point_cast<nanoseconds>(steady_clock::now())
                         .time_since_epoch()
                         .count();

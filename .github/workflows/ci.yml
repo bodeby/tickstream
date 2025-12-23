@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive  # Important if catch2 is a submodule
+    
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y cmake build-essential
+    
+    - name: Configure CMake
+      run: |
+        cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
+    
+    - name: Build
+      run: |
+        cmake --build build --config Debug --target all
+    
+    - name: Run tests
+      run: |
+        cd build
+        ctest --output-on-failure -C Debug
+    
+    # Optional: Also run the custom 'check' target if you want
+    - name: Run custom check target
+      run: |
+        cd build
+        make check || cmake --build build --target check

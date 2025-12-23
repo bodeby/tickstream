@@ -1,4 +1,4 @@
-// Created by @bodeby on 03/10/2025.
+// include/tickstream/stream_gen.hpp
 
 #pragma once
 

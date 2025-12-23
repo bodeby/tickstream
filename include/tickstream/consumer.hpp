@@ -1,4 +1,4 @@
-// tickstream/consumer.hpp
+// include/tickstream/consumer.hpp
 #pragma once
 
 #include "ring_buffer.hpp"

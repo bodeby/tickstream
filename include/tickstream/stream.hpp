@@ -2,13 +2,15 @@
 
 #pragma once
 
+#include <memory>
+#include <unordered_map>
+#include <string>
+
+// internal includes
 #include "ring_buffer.hpp"
 #include "producer.hpp"
 #include "consumer.hpp"
 #include "tick.hpp"
-#include <memory>
-#include <unordered_map>
-#include <string>
 
 namespace tickstream {
 
