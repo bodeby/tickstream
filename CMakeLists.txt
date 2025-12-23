@@ -9,3 +9,30 @@ target_include_directories(tickstream INTERFACE include)
 # thin CLI
 add_executable(tickstream_cli src/main.cpp)
 target_link_libraries(tickstream_cli PRIVATE tickstream)
+
+# ------------------ TEST SUITE ------------------
+
+add_executable(tests
+    external/catch2/catch_amalgamated.cpp  # The catch implementation
+    tests/tickstream/test_tick.cpp
+)
+
+# Include directories for tests
+target_include_directories(tests PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/catch2  # catch_amalgamated.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include          # project headers
+)
+
+# Link test executable with your libraries
+target_link_libraries(tests PRIVATE tickstream)
+
+# Enable CTest
+enable_testing()
+add_test(NAME tests COMMAND tests)
+
+# Optional: Add a test target for easy building
+add_custom_target(check
+    COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure
+    DEPENDS tests
+    COMMENT "Running tests..."
+)
