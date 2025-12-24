@@ -6,7 +6,6 @@
 // internal includes
 #include <tickstream/tick.hpp>
 #include <tickstream/params.hpp>
-#include <tickstream/stream_gen.hpp>
 #include <tickstream/ring_buffer.hpp>
 #include <tickstream/producer.hpp>
 #include <tickstream/consumer.hpp>

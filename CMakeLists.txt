@@ -10,6 +10,10 @@ target_include_directories(tickstream INTERFACE include)
 add_executable(tickstream_cli src/main.cpp)
 target_link_libraries(tickstream_cli PRIVATE tickstream)
 
+# single stream example
+# add_executable(single_stream_example src/single_stream.cpp)
+# target_link_libraries(single_stream_example PRIVATE tickstream)
+
 # ------------------ TEST SUITE ------------------
 
 add_executable(tests
