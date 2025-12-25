@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <ostream>
+#include <vector>
 
 // internal includes
 #include <tickstream/tick.hpp>
@@ -9,6 +10,7 @@
 #include <tickstream/ring_buffer.hpp>
 #include <tickstream/producer.hpp>
 #include <tickstream/consumer.hpp>
+#include <tickstream/stream_manager.hpp>
 
 namespace ts = tickstream;                      // local alias
 
@@ -46,4 +48,12 @@ int main()
     ring_buffer.clear(); // Clear the buffer
     std::cout << "Ring buffer size after clear: " << ring_buffer.size() << "\n";
     std::cout << "Popped tick price: " << tick_1.price << "\n";
+
+    auto manager = ts::stream::StreamManager();
+
+    std::vector<int> numbers = {1, 7, 3, 5, 9, 2};
+
+    for (int num : numbers) {
+        manager.add_stream(num);
+    }
 };

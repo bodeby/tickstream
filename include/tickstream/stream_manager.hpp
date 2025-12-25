@@ -2,51 +2,44 @@
 
 #pragma once
 #include <chrono>
+#include <iostream>
+#include <vector>
 
 namespace tickstream::stream
 {
     class StreamManager
     {
+    private:
+        std::vector<int> streams; // Placeholder for actual stream objects
+
     public:
-        StreamManager();    // constructor
-        ~StreamManager();   // destructor
+        StreamManager() = default; // constructor
+        ~StreamManager() = default; // destructor
 
         // stream container
-        void add_stream();
-        void remove_stream();
+        void add_stream(int stream) {
+            std::cout << "Adding stream" << stream << std::endl;
+            streams.push_back(stream);
+        };
+
+        void remove_stream() {
+            std::cout << "Removing stream: " << std::endl;
+            streams.pop_back();
+        }
 
         // stream behaviour
-        void start_all();
-        void stop_all();
+        void start_all() {
+            std::cout << "Starting all streams" << std::endl;
+            for (const int streamID : streams) {
+                std::cout << "my stream" << std::endl;
+            }
+        };
 
+        void stop_all() {
+            std::cout << "Stopping all streams" << std::endl;
+            for (const int streamID : streams) {
+                std::cout << "Stopping Stream: " << streamID << std::endl;
+            }
+        };
     };
-
-    // outside definitions
-    StreamManager::StreamManager() {};
-    StreamManager::~StreamManager() {};
-
-
-    void StreamManager::add_stream() {};
-    void StreamManager::remove_stream() {};
-
-    void StreamManager::start_all(){};
-    void StreamManager::stop_all(){}
-
-
-    struct Config
-    {
-        std::chrono::nanoseconds consumer_timeout = std::chrono::milliseconds(100);
-    };
-    
-
-    class Stream
-    {
-    public:
-        Stream(Config cfg); // constructor
-        ~Stream();          // destructor
-    };
-
-    // outside defintions
-    Stream::Stream(Config cfg){};
-    Stream::~Stream(){};
 }
