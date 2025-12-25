@@ -3,22 +3,21 @@
 #pragma once
 #include <chrono>
 
-namespace tickstream::stream {
+namespace tickstream::stream
+{
 
     struct Config
     {
         std::chrono::nanoseconds consumer_timeout = std::chrono::milliseconds(100);
     };
-    
 
     class Stream
     {
-    public:
-        Stream(Config cfg); // constructor
-        ~Stream();          // destructor
-    };
+    private:
+        Config conf;
 
-    // outside defintions
-    Stream::Stream(Config cfg){};
-    Stream::~Stream(){};
+    public:
+        Stream(Config cfg) : conf(cfg) {}; // constructor
+        ~Stream() = default;               // destructor
+    };
 }

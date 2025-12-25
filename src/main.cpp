@@ -1,4 +1,4 @@
-// Created by @bodeby on 03/10/2025.
+// src/main.cpp
 
 #include <iostream>
 #include <ostream>
@@ -11,6 +11,7 @@
 #include <tickstream/producer.hpp>
 #include <tickstream/consumer.hpp>
 #include <tickstream/stream_manager.hpp>
+#include <tickstream/stream_new.hpp>
 
 namespace ts = tickstream;                      // local alias
 
@@ -49,11 +50,22 @@ int main()
     std::cout << "Ring buffer size after clear: " << ring_buffer.size() << "\n";
     std::cout << "Popped tick price: " << tick_1.price << "\n";
 
+    // ---------- STREAM SECTION ----------
+
     auto manager = ts::stream::StreamManager();
+    std::vector<ts::stream::Stream> streams;
 
-    std::vector<int> numbers = {1, 7, 3, 5, 9, 2};
+    ts::stream::Config config;
+    streams.push_back(ts::stream::Stream(config));
+    streams.push_back(ts::stream::Stream(config));
+    streams.push_back(ts::stream::Stream(config));
 
-    for (int num : numbers) {
-        manager.add_stream(num);
+    for (ts::stream::Stream& s : streams) {
+        // do something with stream s
+        std::cout << "Created a stream instance." << std::endl;
+    }
+
+    for (int s : {1, 7, 3, 5, 9, 2}) {
+        manager.add_stream(s);
     }
 };
