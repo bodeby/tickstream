@@ -7,15 +7,15 @@
 
 // internal includes
 #include <tickstream/generator.hpp>
-#include <tickstream/params.hpp>
 #include <tickstream/tick.hpp>
 #include <tickstream/transport/consumer.hpp>
 #include <tickstream/transport/producer.hpp>
-#include <tickstream/transport/ring_buffer.hpp>
+#include <tickstream/transport/spsc.hpp>
+#include <tickstream/types/params.hpp>
 
 namespace ts = tickstream; // local alias
 
-using TickBuffer = ts::RingBuffer<ts::Tick>; // semantic alias
+using TickBuffer = ts::SPSC<ts::Tick>;       // semantic alias
 using TickConsumer = ts::Consumer<ts::Tick>; // semantic alias
 using TickProducer = ts::Producer<ts::Tick>; // semantic alias
 

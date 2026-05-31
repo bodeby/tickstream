@@ -7,8 +7,8 @@
 #include <unordered_map>
 
 // internal includest
-#include "tickstream/core/ring_buffer.hpp"
-#include "tickstream/producer.hpp"
+#include "tickstream/transport/spsc.hpp"
+#include "tickstream/transport/producer.hpp"
 #include "tickstream/tick.hpp"
 
 namespace tickstream {
@@ -45,7 +45,7 @@ public:
   }
 
   // Get the buffer for consumers
-  RingBuffer<Tick> &get_buffer() { return buffer_; }
+  SPSC<Tick> &get_buffer() { return buffer_; }
 
   // Get statistics
   struct Stats {
@@ -57,7 +57,7 @@ public:
   Stats get_stats() const { return stats_; }
 
 private:
-  RingBuffer<Tick> buffer_;
+  SPSC<Tick> buffer_;
   std::unordered_map<std::string, std::unique_ptr<Producer<Tick>>> producers_;
   Stats stats_;
 };

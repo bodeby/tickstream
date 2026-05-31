@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "ring_buffer.hpp"
+#include "spsc.hpp"
 
 #include <thread>
 #include <functional>
@@ -14,7 +14,7 @@ namespace tickstream {
     public:
         using Callback = std::function<T()>;
 
-        Producer(RingBuffer<T>& buffer, Callback callback, std::chrono::milliseconds interval)
+        Producer(SPSC<T>& buffer, Callback callback, std::chrono::milliseconds interval)
             : buffer_(buffer), callback_(callback), interval_(interval), running_(false) {}
 
         void start() {
@@ -37,7 +37,7 @@ namespace tickstream {
         }
 
     private:
-        RingBuffer<T>& buffer_;
+        SPSC<T>& buffer_;
         Callback callback_;
         std::chrono::milliseconds interval_;
         std::thread thread_;

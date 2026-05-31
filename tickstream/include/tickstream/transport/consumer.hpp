@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "ring_buffer.hpp"
+#include "spsc.hpp"
 
 #include <thread>
 #include <functional>
@@ -19,7 +19,7 @@ namespace tickstream {
             handlers_.push_back(handler);
         }
 
-        void process(RingBuffer<T>& buffer) {
+        void process(SPSC<T>& buffer) {
             T tick;
             while (buffer.try_pop(tick)) {
                 for (auto& handler : handlers_) {
@@ -28,7 +28,7 @@ namespace tickstream {
             }
         }
 
-        void process_continuous(RingBuffer<T>& buffer, std::atomic<bool>& running) {
+        void process_continuous(SPSC<T>& buffer, std::atomic<bool>& running) {
             while (running) {
                 process(buffer);
                 std::this_thread::sleep_for(std::chrono::milliseconds(1));

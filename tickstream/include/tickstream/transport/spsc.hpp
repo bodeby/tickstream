@@ -10,33 +10,33 @@ namespace tickstream
 {
     /// SPSC ring buffer concept for decoupled producer/consumer.
     template <typename T>
-    class RingBuffer {
+    class SPSC {
     public:
-        explicit RingBuffer(std::size_t capacity) 
+        explicit SPSC(std::size_t capacity)
             : buffer_(capacity)
             , capacity_(capacity)
             , head_(0)
             , tail_(0) {}
 
-        ~RingBuffer() = default;
+        ~SPSC() = default;
 
         // non-blocking, lock-free friendly
         bool try_push(const T &item) {
             if (size_.load(std::memory_order_acquire) >= capacity_) {
                 return false; // Buffer is full
             }
-            
+
             buffer_[tail_] = item;
             tail_ = (tail_ + 1) % capacity_;
             size_.fetch_add(1, std::memory_order_release);
             return true;
-        }; 
+        };
 
         bool try_pop(T& item) {
             if (size_.load(std::memory_order_acquire) == 0) {
                 return false; // Buffer is empty
             }
-            
+
             item = buffer_[head_];
             head_ = (head_ + 1) % capacity_;
             size_.fetch_sub(1, std::memory_order_release);
