@@ -6,12 +6,12 @@
 #include <ostream>
 
 // internal includes
-#include <tickstream/consumer.hpp>
-#include <tickstream/core/ring_buffer.hpp>
 #include <tickstream/generator.hpp>
 #include <tickstream/params.hpp>
-#include <tickstream/producer.hpp>
 #include <tickstream/tick.hpp>
+#include <tickstream/transport/consumer.hpp>
+#include <tickstream/transport/producer.hpp>
+#include <tickstream/transport/ring_buffer.hpp>
 
 namespace ts = tickstream; // local alias
 
