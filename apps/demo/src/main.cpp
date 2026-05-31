@@ -1,13 +1,14 @@
 // apps/demo/main.cpp
 
+#include <cstdlib>
 #include <iostream>
 #include <ostream>
 
 // internal includes
 #include <tickstream/consumer.hpp>
+#include <tickstream/core/ring_buffer.hpp>
 #include <tickstream/params.hpp>
 #include <tickstream/producer.hpp>
-#include <tickstream/ring_buffer.hpp>
 #include <tickstream/stream_gen.hpp>
 #include <tickstream/tick.hpp>
 
@@ -49,8 +50,15 @@ int main() {
   std::cout << "Ring buffer size after pops: " << ring_buffer.size() << "\n";
 
   bool pushed_3 = ring_buffer.try_push(tick_1);
+
+  if (!pushed_3) {
+    return EXIT_FAILURE;
+  }
+
   ring_buffer.clear(); // Clear the buffer
 
   std::cout << "Ring buffer size after clear: " << ring_buffer.size() << "\n";
   std::cout << "Popped tick price: " << tick_1.price << "\n";
+
+  return EXIT_SUCCESS;
 };

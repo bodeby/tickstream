@@ -5,8 +5,7 @@
 #include <functional>
 #include <cstddef>
 #include <memory>
-#include <string>
-#include <vector>
+
 #include "tickstream/tick.hpp"
 #include "tickstream/params.hpp"
 

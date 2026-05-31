@@ -2,8 +2,7 @@
 
 #pragma once
 
-#include "ring_buffer.hpp"
-#include "tick.hpp"
+#include "tickstream/core/ring_buffer.hpp"
 
 #include <thread>
 #include <functional>
