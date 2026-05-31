@@ -5,7 +5,7 @@
 #include <iostream>
 #include <ostream>
 
-// internal includes
+// library includes
 #include <tickstream/generator.hpp>
 #include <tickstream/tick.hpp>
 #include <tickstream/transport/consumer.hpp>
@@ -22,7 +22,7 @@ using TickProducer = ts::Producer<ts::Tick>; // semantic alias
 constexpr static std::size_t buffer_size{1024};
 
 int main() {
-  TickBuffer ring_buffer(buffer_size);
+  TickBuffer tick_queue(buffer_size);
   TickConsumer consumer();
   TickProducer producer();
 
@@ -32,25 +32,25 @@ int main() {
   std::cout << tick_1 << "\n";
   std::cout << tick_2 << "\n";
 
-  ring_buffer.try_push(tick_1);
-  ring_buffer.try_push(tick_2);
+  tick_queue.try_push(tick_1);
+  tick_queue.try_push(tick_2);
 
-  std::cout << "Ring buffer size after pushes: " << ring_buffer.size() << "\n";
+  std::cout << "Ring buffer size after pushes: " << tick_queue.size() << "\n";
 
-  ring_buffer.try_pop(tick_1);
-  ring_buffer.try_pop(tick_2);
+  tick_queue.try_pop(tick_1);
+  tick_queue.try_pop(tick_2);
 
-  std::cout << "Ring buffer size after pops: " << ring_buffer.size() << "\n";
+  std::cout << "Ring buffer size after pops: " << tick_queue.size() << "\n";
 
-  bool pushed_3 = ring_buffer.try_push(tick_1);
+  bool pushed_3 = tick_queue.try_push(tick_1);
 
   if (!pushed_3) {
     return EXIT_FAILURE;
   }
 
-  ring_buffer.clear(); // Clear the buffer
+  tick_queue.clear(); // Clear the buffer
 
-  std::cout << "Ring buffer size after clear: " << ring_buffer.size() << "\n";
+  std::cout << "Ring buffer size after clear: " << tick_queue.size() << "\n";
   std::cout << "Popped tick price: " << tick_1.price << "\n";
 
   return EXIT_SUCCESS;
