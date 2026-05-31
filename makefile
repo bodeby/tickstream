@@ -63,10 +63,3 @@ bench:
 	cmake --preset release-bench
 	cmake --build --preset release-bench
 	./build/release-bench/benchmarks/$(BENCH) --benchmark_min_time=1s
-
-# ------------------------
-# Clean
-# ------------------------
-
-clean:
-	rm -rf build

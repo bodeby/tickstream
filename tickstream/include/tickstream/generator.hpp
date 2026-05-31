@@ -22,16 +22,16 @@ namespace tickstream {
     // };
 
     /// Pseudo tick stream engine. pImpl hides model details.
-    class StreamGen {
+    class Generator {
     public:
-        explicit StreamGen(const Params& params);
-        ~StreamGen();
-        StreamGen(StreamGen&&) noexcept;
-        StreamGen& operator=(StreamGen&&) noexcept;
+        explicit Generator(const Params& params);
+        ~Generator();
+        Generator(Generator&&) noexcept;
+        Generator& operator=(Generator&&) noexcept;
 
         // Non-copyable (owns stateful RNG and timing)
-        StreamGen(const StreamGen&) = delete;
-        StreamGen& operator=(const StreamGen&) = delete;
+        Generator(const Generator&) = delete;
+        Generator& operator=(const Generator&) = delete;
 
         // Pull model: single-step generation.
         Tick next();

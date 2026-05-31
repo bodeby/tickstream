@@ -1,5 +1,6 @@
 // apps/demo/main.cpp
 
+#include <cstddef>
 #include <cstdlib>
 #include <iostream>
 #include <ostream>
@@ -7,9 +8,9 @@
 // internal includes
 #include <tickstream/consumer.hpp>
 #include <tickstream/core/ring_buffer.hpp>
+#include <tickstream/generator.hpp>
 #include <tickstream/params.hpp>
 #include <tickstream/producer.hpp>
-#include <tickstream/stream_gen.hpp>
 #include <tickstream/tick.hpp>
 
 namespace ts = tickstream; // local alias
@@ -18,10 +19,10 @@ using TickBuffer = ts::RingBuffer<ts::Tick>; // semantic alias
 using TickConsumer = ts::Consumer<ts::Tick>; // semantic alias
 using TickProducer = ts::Producer<ts::Tick>; // semantic alias
 
-constexpr static auto buf_size = 2 << 9;
+constexpr static std::size_t buffer_size{1024};
 
 int main() {
-  TickBuffer ring_buffer(buf_size);
+  TickBuffer ring_buffer(buffer_size);
   TickConsumer consumer();
   TickProducer producer();
 
@@ -31,22 +32,14 @@ int main() {
   std::cout << tick_1 << "\n";
   std::cout << tick_2 << "\n";
 
-  bool pushed_1 = ring_buffer.try_push(tick_1);
-  bool pushed_2 = ring_buffer.try_push(tick_2);
+  ring_buffer.try_push(tick_1);
+  ring_buffer.try_push(tick_2);
 
-  std::cout << "Pushed BTC tick: " << (pushed_1 ? "success" : "failure")
-            << "\n";
-  std::cout << "Pushed ETH tick: " << (pushed_2 ? "success" : "failure")
-            << "\n";
   std::cout << "Ring buffer size after pushes: " << ring_buffer.size() << "\n";
 
-  bool popped_1 = ring_buffer.try_pop(tick_1);
-  bool popped_2 = ring_buffer.try_pop(tick_2);
+  ring_buffer.try_pop(tick_1);
+  ring_buffer.try_pop(tick_2);
 
-  std::cout << "Popped BTC tick: " << (popped_1 ? "success" : "failure")
-            << "\n";
-  std::cout << "Popped ETH tick: " << (popped_2 ? "success" : "failure")
-            << "\n";
   std::cout << "Ring buffer size after pops: " << ring_buffer.size() << "\n";
 
   bool pushed_3 = ring_buffer.try_push(tick_1);
