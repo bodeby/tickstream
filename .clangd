@@ -1,0 +1,6 @@
+# use symlinks to control the compilation database
+# ln -sfn build/debug build/compile_commands
+# ln -sfn build/debug-tests build/compile_commands
+# ln -sfn build/asan-tests build/compile_commands
+CompileFlags:
+  CompilationDatabase: build/debug-tests

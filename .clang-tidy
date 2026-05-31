@@ -1,0 +1,26 @@
+Checks: >
+  -*,
+
+  # correctness
+  bugprone-*,
+
+  # selective perf
+  performance-*,
+  -performance-enum-size,
+  -performance-inefficient-vector-operation,
+  -performance-unnecessary-value-param,
+
+  # selective modernization
+  modernize-use-nullptr,
+  modernize-use-override,
+  modernize-make-unique,
+
+  # ownership correctness
+  cppcoreguidelines-owning-memory,
+
+  # numeric safety
+  bugprone-narrowing-conversions,
+  cppcoreguidelines-narrowing-conversions
+
+HeaderFilterRegex: '^(?!.*tests/).*'
+WarningsAsErrors: ''

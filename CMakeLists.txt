@@ -1,38 +1,67 @@
-cmake_minimum_required(VERSION 3.16)
+# ------------------------------------------------------------------
+# Projects settings (applies to all targets)
+# ------------------------------------------------------------------
+#
+# Build type, compiler, and sanitizers are configured via presets
+
 project(tickstream LANGUAGES CXX)
+cmake_minimum_required(VERSION 3.20)
+
+# ------------------------------------------------------------------
+# Global language settings (applies to all targets)
+# ------------------------------------------------------------------
+#
+# Build type, compiler, and sanitizers are configured via presets
+
 set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
-# header-only library
-add_library(tickstream INTERFACE)
-target_include_directories(tickstream INTERFACE include)
+# ------------------------------------------------------------------
+# Core libraries
+# ------------------------------------------------------------------
+#
+# Venue-agnostic runtime, recorder and protocol code
 
-# thin CLI
-add_executable(tickstream_cli src/main.cpp)
-target_link_libraries(tickstream_cli PRIVATE tickstream)
+add_subdirectory(tickstream)
 
-# ------------------ TEST SUITE ------------------
+# ------------------------------------------------------------------
+# Vendor libraries
+# ------------------------------------------------------------------
 
-add_executable(tests
-    external/catch2/catch_amalgamated.cpp  # The catch implementation
-    tests/tickstream/test_tick.cpp
-)
+# add_subdirectory(vendor)
 
-# Include directories for tests
-target_include_directories(tests PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/catch2  # catch_amalgamated.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/include          # project headers
-)
+# ------------------------------------------------------------------
+# Applications
+# ------------------------------------------------------------------
+#
+# Executables that wire libraries together (entry points only)
 
-# Link test executable with your libraries
-target_link_libraries(tests PRIVATE tickstream)
+set(TS_BUILD_APPS_DEFAULT ON)
 
-# Enable CTest
-enable_testing()
-add_test(NAME tests COMMAND tests)
+option(TS_BUILD_TRADER "Build demo app" ${TS_BUILD_APPS_DEFAULT})
 
-# Optional: Add a test target for easy building
-add_custom_target(check
-    COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure
-    DEPENDS tests
-    COMMENT "Running tests..."
-)
+if (TS_BUILD_DEMO)
+  add_subdirectory(apps/demo) # main entry
+endif()
+
+# ------------------------------------------------------------------
+# Tests
+# ------------------------------------------------------------------
+
+option(TS_BUILD_TESTS "Build unit tests" OFF)
+
+if (TS_BUILD_TESTS)
+  enable_testing()
+  add_subdirectory(tests)
+endif()
+
+# ------------------------------------------------------------------
+# Benchmarks
+# ------------------------------------------------------------------
+
+option(TS_BUILD_BENCHMARKS "Build benchmarks" OFF)
+
+if (TS_BUILD_BENCHMARKS)
+  add_subdirectory(benchmarks)
+endif()

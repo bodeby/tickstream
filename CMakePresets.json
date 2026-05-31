@@ -1,0 +1,135 @@
+{
+  "version": 8,
+
+  "configurePresets": [
+    {
+      "name": "base",
+      "hidden": true,
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_CXX_COMPILER": "clang++",
+        "CMAKE_C_COMPILER": "clang",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "CMAKE_CXX_COMPILER_LAUNCHER": "ccache",
+        "CMAKE_C_COMPILER_LAUNCHER": "ccache",
+        "CMAKE_CXX_FLAGS": "-fno-omit-frame-pointer",
+        "CMAKE_EXE_LINKER_FLAGS": "-fuse-ld=lld",
+        "CMAKE_SHARED_LINKER_FLAGS": "-fuse-ld=lld",
+        "TS_BUILD_BENCHMARKS": "OFF",
+        "TS_BUILD_TESTS": "OFF"
+      }
+    },
+
+    {
+      "name": "debug",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+
+    {
+      "name": "release",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_CXX_FLAGS_RELEASE": "-O3 -march=x86-64-v3 -DNDEBUG",
+        "CMAKE_INTERPROCEDURAL_OPTIMIZATION": "ON"
+      }
+    },
+
+    {
+      "name": "relwithdebinfo",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+        "CMAKE_CXX_FLAGS_RELWITHDEBINFO": "-O3 -march=x86-64-v3",
+        "CMAKE_INTERPROCEDURAL_OPTIMIZATION": "ON"
+      }
+    },
+
+    {
+      "name": "release-bench",
+      "inherits": "release",
+      "cacheVariables": {
+        "VA_BUILD_BENCHMARKS": "ON",
+        "CMAKE_INTERPROCEDURAL_OPTIMIZATION": "OFF"
+      }
+    },
+
+    {
+      "name": "asan",
+      "inherits": "debug",
+      "cacheVariables": {
+        "CMAKE_CXX_FLAGS": "-fsanitize=address -fno-omit-frame-pointer",
+        "CMAKE_EXE_LINKER_FLAGS": "-fsanitize=address",
+        "CMAKE_SHARED_LINKER_FLAGS": "-fsanitize=address"
+      }
+    },
+
+    {
+      "name": "ubsan",
+      "inherits": "debug",
+      "cacheVariables": {
+        "CMAKE_CXX_FLAGS": "-fsanitize=undefined -fno-sanitize-recover=undefined -fno-omit-frame-pointer",
+        "CMAKE_EXE_LINKER_FLAGS": "-fsanitize=undefined",
+        "CMAKE_SHARED_LINKER_FLAGS": "-fsanitize=undefined"
+      }
+    },
+
+    {
+      "name": "debug-tests",
+      "inherits": "debug",
+      "cacheVariables": {
+        "VA_BUILD_TESTS": "ON"
+      }
+    },
+
+    {
+      "name": "asan-tests",
+      "inherits": "asan",
+      "cacheVariables": {
+        "VA_BUILD_TESTS": "ON"
+      }
+    },
+
+    {
+      "name": "ubsan-tests",
+      "inherits": "ubsan",
+      "cacheVariables": {
+        "VA_BUILD_TESTS": "ON"
+      }
+    }
+  ],
+
+  "buildPresets": [
+    { "name": "debug", "configurePreset": "debug" },
+    { "name": "release", "configurePreset": "release" },
+    { "name": "relwithdebinfo", "configurePreset": "relwithdebinfo" },
+    { "name": "release-bench", "configurePreset": "release-bench" },
+    { "name": "asan", "configurePreset": "asan" },
+    { "name": "ubsan", "configurePreset": "ubsan" },
+    { "name": "debug-tests", "configurePreset": "debug-tests" },
+    { "name": "asan-tests", "configurePreset": "asan-tests" },
+    { "name": "ubsan-tests", "configurePreset": "ubsan-tests" }
+  ],
+
+  "testPresets": [
+    {
+      "name": "debug-tests",
+      "configurePreset": "debug-tests",
+      "output": { "outputOnFailure": true }
+    },
+    {
+      "name": "asan-tests",
+      "configurePreset": "asan-tests",
+      "output": { "outputOnFailure": true }
+    },
+    {
+      "name": "ubsan-tests",
+      "configurePreset": "ubsan-tests",
+      "output": { "outputOnFailure": true }
+    }
+  ]
+}

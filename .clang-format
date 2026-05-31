@@ -1,0 +1,25 @@
+BasedOnStyle: LLVM
+Language: Cpp
+ColumnLimit: 80
+
+BinPackParameters: false
+BinPackArguments: false
+
+AlignAfterOpenBracket: BlockIndent
+ContinuationIndentWidth: 2
+
+PenaltyBreakBeforeFirstCallParameter: 1000
+
+PackConstructorInitializers: Never
+ConstructorInitializerAllOnOneLineOrOnePerLine: true
+
+PointerAlignment: Right
+ReferenceAlignment: Right
+
+AllowShortFunctionsOnASingleLine: Inline
+AllowShortBlocksOnASingleLine: Never
+AllowShortIfStatementsOnASingleLine: WithoutElse
+
+ReflowComments: false
+SortIncludes: true
+IncludeBlocks: Regroup
