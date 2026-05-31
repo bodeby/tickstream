@@ -4,8 +4,8 @@
 
 #include "tickstream/orderbook/delta.hpp"
 #include "tickstream/orderbook/level.hpp"
+#include "tickstream/types/base.hpp"
 
-#include <cstdint>
 #include <vector>
 
 namespace tickstream::orderbook {
@@ -25,14 +25,14 @@ public:
   };
 
   [[nodiscard]]
-  std::uint32_t best_bid() const noexcept {
-    if (bids_.empty()) return 0;
+  Price best_bid() const noexcept {
+    if (bids_.empty()) return Price{0};
     return bids_.front().price;
   };
 
   [[nodiscard]]
-  std::uint32_t best_ask() const noexcept {
-    if (asks_.empty()) return 0;
+  Price best_ask() const noexcept {
+    if (asks_.empty()) return Price{0};
     return asks_.front().price;
   };
 

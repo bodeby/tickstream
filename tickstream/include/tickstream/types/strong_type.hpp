@@ -7,9 +7,63 @@
 #include <ostream>
 #include <type_traits>
 
-namespace vantage::core::types {
+namespace tickstream {
 
-template <typename T, typename Tag> class StrongType {
+// ------ CRTP Mixins ------
+
+template <typename Derived> struct Addable {
+  friend constexpr Derived
+  operator+(const Derived &lhs, const Derived &rhs) noexcept {
+    return Derived{lhs.raw() + rhs.raw()};
+  }
+};
+
+template <typename Derived> struct Subtractable {
+  friend constexpr Derived
+  operator-(const Derived &lhs, const Derived &rhs) noexcept {
+    return Derived{lhs.raw() - rhs.raw()};
+  }
+};
+
+template <typename Derived> struct Multipliable {
+  friend constexpr Derived
+  operator*(const Derived &lhs, typename Derived::value_type rhs) noexcept {
+    return Derived{lhs.raw() * rhs};
+  }
+};
+
+template <typename Derived> struct Incrementable {
+  constexpr Derived &operator++() noexcept {
+    auto &self = static_cast<Derived &>(*this);
+    self = Derived{self.raw() + 1};
+    return self;
+  }
+
+  constexpr Derived operator++(int) noexcept {
+    auto copy = static_cast<Derived &>(*this);
+    ++(*this);
+    return copy;
+  }
+};
+
+template <typename Derived> struct Printable {
+  friend std::ostream &operator<<(std::ostream &os, const Derived &value) {
+    return os << value.raw();
+  }
+};
+
+template <typename Derived> struct Hashable {
+  struct Hasher {
+    std::size_t operator()(const Derived &v) const noexcept {
+      return std::hash<typename Derived::value_type>{}(v.raw());
+    }
+  };
+};
+
+// ------ Template Class ------
+
+template <typename T, typename Tag, template <typename> typename... Skills>
+class StrongType : public Skills<StrongType<T, Tag, Skills...>>... {
 public:
   using value_type = T;
 
@@ -43,15 +97,14 @@ constexpr auto validate_strong_type() noexcept -> bool {
   return true;
 }
 
-} // namespace vantage::core::types
+} // namespace tickstream
 
 namespace std {
 
 template <typename T, typename Tag>
-struct hash<vantage::core::types::StrongType<T, Tag>> {
-  auto operator()(
-    const vantage::core::types::StrongType<T, Tag> &value
-  ) const noexcept -> std::size_t {
+struct hash<tickstream::StrongType<T, Tag>> {
+  auto operator()(const tickstream::StrongType<T, Tag> &value) const noexcept
+    -> std::size_t {
     return std::hash<T>{}(value.raw());
   }
 };

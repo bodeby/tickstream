@@ -2,12 +2,13 @@
 
 #pragma once
 
-#include <cstdint>
+#include <tickstream/types/base.hpp>
+
 namespace tickstream::orderbook {
 
 struct Level {
-  std::uint32_t price;
-  std::uint32_t quantity;
+  Price price;       // 4
+  Quantity quantity; // 4
 };
 
 } // namespace tickstream::orderbook
