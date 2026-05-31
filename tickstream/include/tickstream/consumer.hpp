@@ -1,8 +1,11 @@
 // include/tickstream/consumer.hpp
+
 #pragma once
 
 #include "ring_buffer.hpp"
 #include "tick.hpp"
+
+#include <thread>
 #include <functional>
 #include <vector>
 
@@ -12,11 +15,11 @@ namespace tickstream {
     class Consumer {
     public:
         using Handler = std::function<void(const T&)>;
-        
+
         void subscribe(Handler handler) {
             handlers_.push_back(handler);
         }
-        
+
         void process(RingBuffer<T>& buffer) {
             T tick;
             while (buffer.try_pop(tick)) {
@@ -25,7 +28,7 @@ namespace tickstream {
                 }
             }
         }
-        
+
         void process_continuous(RingBuffer<T>& buffer, std::atomic<bool>& running) {
             while (running) {
                 process(buffer);

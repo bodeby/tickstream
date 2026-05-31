@@ -14,12 +14,12 @@ all: run
 run:
 	cmake --preset $(PRESET)
 	cmake --build --preset $(PRESET) --target tickstream_$(APP)
-	scripts/with_env.sh ./build/$(PRESET)/apps/$(APP)/tickstream_$(APP)
+	./build/$(PRESET)/apps/$(APP)/tickstream_$(APP)
 
 debug:
 	cmake --preset $(PRESET)
 	cmake --build --preset $(PRESET) --target tickstream_$(APP)
-	scripts/with_env.sh lldb ./build/$(PRESET)/apps/$(APP)/tickstream_$(APP)
+	lldb ./build/$(PRESET)/apps/$(APP)/tickstream_$(APP)
 
 # ------------------------
 # Convenience targets (primary app)

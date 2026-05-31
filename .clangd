@@ -3,4 +3,4 @@
 # ln -sfn build/debug-tests build/compile_commands
 # ln -sfn build/asan-tests build/compile_commands
 CompileFlags:
-  CompilationDatabase: build/debug-tests
+  CompilationDatabase: build/debug

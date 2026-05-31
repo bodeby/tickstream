@@ -4,8 +4,8 @@
 #
 # Build type, compiler, and sanitizers are configured via presets
 
-project(tickstream LANGUAGES CXX)
 cmake_minimum_required(VERSION 3.20)
+project(tickstream LANGUAGES CXX)
 
 # ------------------------------------------------------------------
 # Global language settings (applies to all targets)
@@ -39,7 +39,7 @@ add_subdirectory(tickstream)
 
 set(TS_BUILD_APPS_DEFAULT ON)
 
-option(TS_BUILD_TRADER "Build demo app" ${TS_BUILD_APPS_DEFAULT})
+option(TS_BUILD_DEMO "Build demo app" ${TS_BUILD_APPS_DEFAULT})
 
 if (TS_BUILD_DEMO)
   add_subdirectory(apps/demo) # main entry

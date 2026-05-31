@@ -1,23 +1,25 @@
 cmake_minimum_required(VERSION 3.20)
 
+project(tickstream LANGUAGES CXX)
+
 # ------------------------------------------------------------------
-# Core library (venue-agnostic runtime + business logic)
+# Header-only library
 # ------------------------------------------------------------------
 
-add_library(tickstream STATIC)
+add_library(tickstream INTERFACE)
 
 target_include_directories(tickstream
-    PUBLIC
+    INTERFACE
         ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
 target_compile_features(tickstream
-    PUBLIC
+    INTERFACE
         cxx_std_20
 )
 
 target_compile_options(tickstream
-    PRIVATE
+    INTERFACE
         -Wall
         -Wextra
         -Wpedantic
