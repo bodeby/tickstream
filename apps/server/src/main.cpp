@@ -4,8 +4,8 @@
 
 // library
 #include <tickstream/generator.hpp>
-#include <tickstream/process/gbm.hpp>
-#include <tickstream/process/heston.hpp>
+#include <tickstream/process/price/gbm.hpp>
+#include <tickstream/process/price/heston.hpp>
 #include <tickstream/tick.hpp>
 
 // STL
