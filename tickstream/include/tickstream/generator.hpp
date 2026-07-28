@@ -1,43 +1,38 @@
-// include/tickstream/stream_gen.hpp
+// tickstream/include/tickstream/generator.hpp
 
 #pragma once
 
 #include "tickstream/tick.hpp"
-#include "tickstream/types/params.hpp"
 
-#include <cstddef>
-#include <functional>
-#include <memory>
+// STL
+#include <cstdint>
+#include <random>
 
 namespace tickstream {
 
-/// Pseudo tick stream engine. pImpl hides model details.
-class Generator {
+template <typename Process> class Generator {
 public:
-  explicit Generator(const Params &params);
-  ~Generator();
+  explicit Generator(Process process)
+      : price_(std::move(process)) {}
 
-  Generator(const Generator &) = delete;            // copy
-  Generator &operator=(const Generator &) = delete; // copy assignement
-
-  Generator(Generator &&) noexcept;            // move operator
-  Generator &operator=(Generator &&) noexcept; // move assigment
-
-  // Pull model: single-step generation.
-  Tick next();
-
-  // Push model: call sink at target rate. count=0 => unbounded.
-  void run(const std::function<void(const Tick &)> &sink, std::size_t count = 0);
-
-  // Control
-  void set_rate_hz(double hz);
-  double rate_hz() const;
-
-  // Introspection
-  const Params &params() const;
+  Tick next(const std::uint64_t seq) {
+    return {
+      .seq = seq,
+      .exchange_ts = 0,       // _rdtsc
+      .price = price_.next(), // process
+      .symbol = 999,          // static
+      .qty = qty_(rng_),      // distribution
+      .side = side_(rng_),    // distribution
+      .type = type_(rng_),    // distrubition
+    };
+  };
 
 private:
-  struct Impl;
-  std::unique_ptr<Impl> p_;
+  Process price_;
+  std::mt19937_64 rng_{42};
+  std::poisson_distribution<std::uint32_t> qty_{10};
+  std::bernoulli_distribution side_{0.5};
+  std::discrete_distribution<std::uint8_t> type_{{80, 15, 5}};
 };
+
 } // namespace tickstream

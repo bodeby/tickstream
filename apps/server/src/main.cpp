@@ -3,15 +3,15 @@
 #include "transport/sender.hpp"
 
 // library
-#include <iostream>
-#include <random>
-#include <tickstream/core/tick.hpp>
+#include <tickstream/generator.hpp>
 #include <tickstream/process/gbm.hpp>
+#include <tickstream/tick.hpp>
 
 // STL
 #include <chrono>
 #include <cstdint>
 #include <cstdlib>
+#include <iostream>
 #include <span>
 #include <thread>
 
@@ -34,27 +34,12 @@ int main() {
     .dt = 1.0 / (252.0 * 6.5 * 60.0 * 60.0) // one second
   });
 
-  auto tick = tickstream::core::Tick{};
-
-  // distributions
-
-  std::mt19937_64 rng(42);
-  std::poisson_distribution<std::uint32_t> qty_dist(10);
-  std::discrete_distribution<std::uint8_t> type_dist({80, 15, 5});
-  std::bernoulli_distribution side_dist(0.5);
+  tickstream::Generator<tickstream::GBM> generator(std::move(price));
 
   // Runtime loop
 
-  for (std::uint64_t i{0}; i < max_messages; ++i) {
-
-    tick.seq = i;
-    tick.exchange_ts = 0;       // _rdtsc
-    tick.price = price.next();  // process based
-    tick.symbol = 999;          // static, we dont need multi for now
-    tick.qty = qty_dist(rng);   // process based maybe Heston or OU
-    tick.side = side_dist(rng); // distribution: maybe bernoulli
-    tick.type = type_dist(rng); //should repr:  Trade, Quote, Update via uint8
-
+  for (std::uint64_t seq{0}; seq < max_messages; ++seq) {
+    auto tick = generator.next(seq);
     std::cout << "tick: " << tick << '\n';
 
     auto bytes = std::as_bytes(std::span{&tick, 1});

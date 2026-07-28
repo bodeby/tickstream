@@ -1,38 +1,31 @@
-// include/tickstream/tick.hpp
+// tickstream/include/tickstream/core/tick.hpp
 
 #pragma once
 
-#include <string>
 #include <cstdint>
+#include <iomanip>
+#include <ostream>
 
 namespace tickstream {
 
-    struct Tick {
-        std::string symbol;
-        double price;
-        double volume;
-        double bid;
-        double ask;
+struct Tick {
+  std::uint64_t seq;
+  std::uint64_t exchange_ts;
+  double price;
+  std::uint32_t symbol;
+  std::uint32_t qty;
+  std::uint8_t side; // Bid/Ask
+  std::uint8_t type; // Trade, Quote, Update
+  std::uint16_t reserved;
+};
 
-        std::uint64_t unix_ts_ns;       // external timestamp (system_clock)
-        std::uint64_t mono_ts_ns;       // monotonic timestamp (steady_clock)
-        std::uint32_t sequence;
-    };
-
-    // stream output operator for Tick
-    inline std::ostream& operator<<(std::ostream& os, const Tick& t) {
-        os << "Tick{"
-        << "symbol=" << t.symbol
-        << ", price=" << t.price
-        << ", volume=" << t.volume
-        << ", bid=" << t.bid
-        << ", ask=" << t.ask
-        << ", unix_ts_ns=" << t.unix_ts_ns
-        << ", mono_ts_ns=" << t.mono_ts_ns
-        << ", sequence=" << t.sequence
-        << "}";
-
-        return os;
-    }
+inline std::ostream &operator<<(std::ostream &os, const Tick &tick) {
+  return os << "Tick{"
+            << "seq=" << tick.seq << ", ts=" << tick.exchange_ts
+            << ", price=" << std::fixed << std::setprecision(4) << tick.price
+            << ", symbol=" << tick.symbol << ", qty=" << tick.qty
+            << ", side=" << static_cast<unsigned>(tick.side)
+            << ", type=" << static_cast<unsigned>(tick.type) << '}';
+}
 
 } // namespace tickstream
