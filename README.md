@@ -24,7 +24,35 @@ tickstream/include/tickstream/detail/models.hpp # private
 
 - [Ring Buffer](https://en.wikipedia.org/wiki/Circular_buffer)
 
-
 ## Ideas
 
 1. Use [IMGUI](https://github.com/ocornut/imgui) for real-time tick movement visualizations.
+
+## Roadmap
+
+| Process Name                    | Process Type     | Implemented |
+| ------------------------------- | ---------------- | :---------: |
+| Random Walk                     | Price            |     ⬜      |
+| Geometric Brownian Motion (GBM) | Price            |     ✅      |
+| Heston                          | Price            |     ✅      |
+| Ornstein-Uhlenbeck (OU)         | Price            |     ⬜      |
+| Cox-Ingersoll-Ross (CIR)        | Price / Variance |     ⬜      |
+| Merton Jump Diffusion           | Price            |     ⬜      |
+| Markov Switching GBM            | Price            |     ⬜      |
+| Markov Switching Heston         | Price            |     ⬜      |
+| Fixed Interval                  | Timestamp        |     ⬜      |
+| Poisson Arrival                 | Timestamp        |     ⬜      |
+| Hawkes Arrival                  | Timestamp        |     ⬜      |
+| Constant Quantity               | Quantity         |     ⬜      |
+| Uniform Quantity                | Quantity         |     ⬜      |
+| Poisson Quantity                | Quantity         |     ⬜      |
+| Log-Normal Quantity             | Quantity         |     ⬜      |
+| Pareto Quantity                 | Quantity         |     ⬜      |
+| Bernoulli Side                  | Side             |     ⬜      |
+| Markov Side                     | Side             |     ⬜      |
+| Imbalance Side                  | Side             |     ⬜      |
+| Discrete Event Type             | Event Type       |     ⬜      |
+| State-Dependent Event Type      | Event Type       |     ⬜      |
+| Constant Spread                 | Spread           |     ⬜      |
+| Ornstein-Uhlenbeck Spread       | Spread           |     ⬜      |
+| Regime Spread                   | Spread           |     ⬜      |
