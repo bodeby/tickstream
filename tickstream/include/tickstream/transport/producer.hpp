@@ -4,43 +4,47 @@
 
 #include "spsc.hpp"
 
-#include <thread>
 #include <functional>
+#include <thread>
 
 namespace tickstream {
 
-    template<typename T>
-    class Producer {
-    public:
-        using Callback = std::function<T()>;
+template <typename T> class Producer {
+public:
+  using Callback = std::function<T()>;
 
-        Producer(SPSC<T>& buffer, Callback callback, std::chrono::milliseconds interval)
-            : buffer_(buffer), callback_(callback), interval_(interval), running_(false) {}
+  Producer(
+    SPSC<T> &buffer, Callback callback, std::chrono::milliseconds interval
+  )
+      : buffer_(buffer),
+        callback_(callback),
+        interval_(interval),
+        running_(false) {}
 
-        void start() {
-            running_ = true;
-            thread_ = std::thread([this]() {
-                while (running_) {
-                    T tick = callback_();
-                    while (!buffer_.try_push(tick)) {
-                        // Buffer full - wait or drop
-                        std::this_thread::sleep_for(std::chrono::microseconds(10));
-                    }
-                    std::this_thread::sleep_for(interval_);
-                }
-            });
+  void start() {
+    running_ = true;
+    thread_ = std::thread([this]() {
+      while (running_) {
+        T tick = callback_();
+        while (!buffer_.try_push(tick)) {
+          // Buffer full - wait or drop
+          std::this_thread::sleep_for(std::chrono::microseconds(10));
         }
+        std::this_thread::sleep_for(interval_);
+      }
+    });
+  }
 
-        void stop() {
-            running_ = false;
-            if (thread_.joinable()) thread_.join();
-        }
+  void stop() {
+    running_ = false;
+    if (thread_.joinable()) thread_.join();
+  }
 
-    private:
-        SPSC<T>& buffer_;
-        Callback callback_;
-        std::chrono::milliseconds interval_;
-        std::thread thread_;
-        std::atomic<bool> running_;
-    };
-}
+private:
+  SPSC<T> &buffer_;
+  Callback callback_;
+  std::chrono::milliseconds interval_;
+  std::thread thread_;
+  std::atomic<bool> running_;
+};
+} // namespace tickstream
