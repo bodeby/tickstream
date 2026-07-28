@@ -4,7 +4,7 @@
 
 namespace tickstream::core {
 
-struct Message {
+struct Tick {
   std::uint64_t seq;
   std::uint64_t exchange_ts;
   std::uint32_t symbol;

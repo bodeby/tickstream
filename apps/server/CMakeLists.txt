@@ -5,5 +5,5 @@ add_executable(tickstream_server
 
 target_link_libraries(tickstream_server
     PRIVATE
-    # tickstream
+    tickstream
 )

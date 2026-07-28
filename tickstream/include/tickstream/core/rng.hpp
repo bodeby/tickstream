@@ -1,11 +1,12 @@
-// Created by @bodeby on 03/10/2025.
+// tickstream/include/tickstream/core/rng.hpp
 
 #pragma once
 
 #include <cstdint>
 #include <random>
 
-namespace tickstream::detail {
+namespace tickstream::core {
+
 class RNG {
 public:
   explicit RNG(std::uint64_t seed);
@@ -13,7 +14,9 @@ public:
   double uniform(double a, double b);
   int poisson(double lambda_dt);
   std::mt19937_64 &engine(); // for advanced use
+
 private:
   std::mt19937_64 eng_;
 };
-} // namespace tickstream::detail
+
+} // namespace tickstream::core

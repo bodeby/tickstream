@@ -6,6 +6,7 @@
 #include <cstdint>
 #include <netinet/in.h>
 #include <string_view>
+#include <span>
 
 namespace server::transport {
 
@@ -22,6 +23,7 @@ public:
 
     bool send(const void* data, std::size_t size);
     bool send(std::string_view message);
+    bool send(std::span<const std::byte>);
 
 private:
     int sock_{-1};
