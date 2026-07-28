@@ -8,7 +8,7 @@
 #include <stdexcept>
 #include <unistd.h>
 
-namespace server::transport {
+namespace transport {
 
 Sender::Sender(std::string_view host, std::uint16_t port) {
   sock_ = socket(AF_INET, SOCK_DGRAM, 0);
@@ -41,7 +41,7 @@ bool Sender::send(std::string_view msg) {
 }
 
 bool Sender::send(std::span<const std::byte> msg) {
- return send(msg.data(), msg.size());
+  return send(msg.data(), msg.size());
 }
 
-} // namespace server::transport
+} // namespace transport

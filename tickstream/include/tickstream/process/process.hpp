@@ -4,10 +4,13 @@
 
 namespace tickstream {
 
-template <typename T> class Process {
+template <typename T>
+class Process {
 public:
-  virtual ~Process() = default;
-  virtual T next() = 0;
+    using value_type = T;
+
+    virtual ~Process() = default;
+    virtual T next() = 0;
 };
 
 } // namespace tickstream::process

@@ -7,14 +7,15 @@
 
 namespace tickstream {
 
-template <typename Process> class Stream {
+template <typename Process>
+class Stream {
 public:
   Stream(Process process, double flow_rate_hz)
       : process_(std::move(process)),
         next_(Clock::now()),
         interval_(std::chrono::duration<double>(1.0 / flow_rate_hz)) {};
 
-  std::optional<core::Message> next() {
+  std::optional<core::Tick> next() {
     auto now = Clock::now();
     if (now < next_) return std::nullopt;
 
