@@ -2,7 +2,7 @@
 
 #pragma once
 
-namespace tickstream::process {
+namespace tickstream {
 
 template <typename T> class Process {
 public:

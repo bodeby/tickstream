@@ -39,10 +39,15 @@ add_subdirectory(tickstream)
 
 set(TS_BUILD_APPS_DEFAULT ON)
 
-option(TS_BUILD_DEMO "Build demo app" ${TS_BUILD_APPS_DEFAULT})
+option(TS_BUILD_DEMO    "Build demo app"      ${TS_BUILD_APPS_DEFAULT})
+option(TS_BUILD_SERVER  "Builder server app"  ON)
 
 if (TS_BUILD_DEMO)
   add_subdirectory(apps/demo) # main entry
+endif()
+
+if (TS_BUILD_SERVER)
+  add_subdirectory(apps/server)
 endif()
 
 # ------------------------------------------------------------------
