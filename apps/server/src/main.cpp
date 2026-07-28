@@ -5,6 +5,7 @@
 // library
 #include <tickstream/generator.hpp>
 #include <tickstream/process/gbm.hpp>
+#include <tickstream/process/heston.hpp>
 #include <tickstream/tick.hpp>
 
 // STL
@@ -34,7 +35,14 @@ int main() {
     .dt = 1.0 / (252.0 * 6.5 * 60.0 * 60.0) // one second
   });
 
-  tickstream::Generator<tickstream::GBM> generator(std::move(price));
+  tickstream::Heston price_2({
+    .s0 = 100.0,                            // S0
+    .mu = 0.05,                             // drift
+    .sigma = 0.20,                          // volatility
+    .dt = 1.0 / (252.0 * 6.5 * 60.0 * 60.0) // one second
+  });
+
+  tickstream::Generator generator(std::move(price_2));
 
   // Runtime loop
 

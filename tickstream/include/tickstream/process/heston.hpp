@@ -7,7 +7,7 @@
 #include <cmath>
 #include <random>
 
-namespace tickstream::gbm {
+namespace tickstream::heston {
 
 struct Context {
   double s0;
@@ -17,17 +17,17 @@ struct Context {
   std::uint64_t seed = std::random_device{}();
 };
 
-} // namespace tickstream::gbm
+} // namespace tickstream::heston
 
 namespace tickstream {
 
 /**
-*  Process : Geometric Brownian Motion
+*  Process : Heston
 */
 
-class GBM final : public Process<double> {
+class Heston final : public Process<double> {
 public:
-  GBM(const gbm::Context &ctx)
+  Heston(const heston::Context &ctx)
       : s_(ctx.s0),
         mu_(ctx.mu),
         sigma_(ctx.sigma),

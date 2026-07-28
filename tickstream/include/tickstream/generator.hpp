@@ -5,14 +5,20 @@
 #include "tickstream/tick.hpp"
 
 // STL
+#include <concepts>
 #include <cstdint>
 #include <random>
 
 namespace tickstream {
 
-template <typename Process> class Generator {
+template <typename P>
+concept PriceProcess = requires(P p) {
+  { p.next() } -> std::convertible_to<double>;
+};
+
+template <typename PriceProcess> class Generator {
 public:
-  explicit Generator(Process process)
+  explicit Generator(PriceProcess process)
       : price_(std::move(process)) {}
 
   Tick next(const std::uint64_t seq) {
@@ -28,7 +34,7 @@ public:
   };
 
 private:
-  Process price_;
+  PriceProcess price_;
   std::mt19937_64 rng_{42};
   std::poisson_distribution<std::uint32_t> qty_{10};
   std::bernoulli_distribution side_{0.5};
