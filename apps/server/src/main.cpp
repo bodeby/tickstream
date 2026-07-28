@@ -35,14 +35,19 @@ int main() {
     .dt = 1.0 / (252.0 * 6.5 * 60.0 * 60.0) // one second
   });
 
-  tickstream::Heston price_2({
-    .s0 = 100.0,                            // S0
-    .mu = 0.05,                             // drift
-    .sigma = 0.20,                          // volatility
-    .dt = 1.0 / (252.0 * 6.5 * 60.0 * 60.0) // one second
+  tickstream::Heston heston({
+    .s0 = 100.0,
+    .v0 = 0.04,    // 20% initial volatility (sqrt(0.04) = 0.20)
+    .mu = 0.05,    // 5% annual drift
+    .kappa = 2.0,  // mean reversion speed
+    .theta = 0.04, // long-run variance (20% volatility)
+    .xi = 0.30,    // volatility of volatility
+    .rho = -0.70,  // leverage effect
+    .dt = 1.0 / 252.0,
+    .seed = 42,
   });
 
-  tickstream::Generator generator(std::move(price_2));
+  tickstream::Generator generator(std::move(heston));
 
   // Runtime loop
 
