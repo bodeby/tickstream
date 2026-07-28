@@ -20,9 +20,9 @@ int main() {
 
   // UDP Server Setup
 
-  constexpr auto localhost = "127.0.0.1";
+  constexpr auto localhost{"127.0.0.1"};
   constexpr auto max_messages{10'000};
-  constexpr auto interval = std::chrono::milliseconds(1);
+  constexpr auto interval{std::chrono::milliseconds(1)};
 
   transport::Sender sender(localhost, 5000);
 
