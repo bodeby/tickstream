@@ -1,38 +1,28 @@
 # Makefile for Tickstream
 
-.PHONY: all run debug run-release run-asan run-ubsan test asan ubsan lint bench clean
+.PHONY: all server server-debug server-release test asan ubsan bench
 
-APP ?= demo
-PRESET ?= debug
 
-all: run
+all: server
 
 # ------------------------
 # Run / Debug (generic)
 # ------------------------
 
-run:
-	cmake --preset $(PRESET)
-	cmake --build --preset $(PRESET) --target tickstream_$(APP)
-	./build/$(PRESET)/apps/$(APP)/tickstream_$(APP)
+server:
+	cmake --preset debug
+	cmake --build --preset debug --target tickstream_server
+	./build/debug/apps/server/tickstream_server
 
-debug:
-	cmake --preset $(PRESET)
-	cmake --build --preset $(PRESET) --target tickstream_$(APP)
-	lldb ./build/$(PRESET)/apps/$(APP)/tickstream_$(APP)
+server-debug:
+	cmake --preset debug
+	cmake --build --preset debug --target tickstream_server
+	lldb ./build/debug/apps/server/tickstream_server
 
-# ------------------------
-# Convenience targets (primary app)
-# ------------------------
-
-run-release:
-	$(MAKE) run PRESET=release
-
-run-asan:
-	$(MAKE) run PRESET=asan
-
-run-ubsan:
-	$(MAKE) run PRESET=ubsan
+server-release:
+	cmake --preset release
+	cmake --build --preset release --target tickstream_server
+	./build/debug/apps/server/tickstream_server
 
 # ------------------------
 # Tests
