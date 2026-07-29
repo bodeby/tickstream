@@ -1,4 +1,4 @@
-// tickstream/types/strong_type.hpp
+// tickstream/include/tickstream/types/base/type.hpp
 
 #pragma once
 

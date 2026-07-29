@@ -4,8 +4,10 @@
 
 #include <cstdint>
 
-namespace tickstream {
+namespace tickstream::types {
 
 enum class Side : std::uint8_t { Bid, Ask };
 
-}
+enum class Event : std::uint8_t { Trade, Quote, Update };
+
+} // namespace tickstream::types

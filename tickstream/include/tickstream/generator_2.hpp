@@ -7,11 +7,11 @@
 #include <concepts>
 #include <utility>
 
-using Price = double;
-using Quantity = double;
-using Side = double;
-using Event = double;
-using Timestamp = double;
+// types
+#include "tickstream/types/price.hpp"
+#include "tickstream/types/quantity.hpp"
+#include "tickstream/types/side.hpp"
+#include "tickstream/types/timestamp.hpp"
 
 namespace tickstream {
 
@@ -21,11 +21,11 @@ concept Process = requires(P p) {
 };
 
 template <
-  Process<Price> PriceModel,
-  Process<Quantity> QuantityModel,
-  Process<Side> SideModel,
-  Process<Event> EventModel,
-  Process<Timestamp> TimestampModel>
+  Process<types::Price> PriceModel,
+  Process<types::Quantity> QuantityModel,
+  Process<types::Side> SideModel,
+  Process<types::Event> EventModel,
+  Process<types::Timestamp> TimestampModel>
 class Generator {
 
   explicit Generator(
