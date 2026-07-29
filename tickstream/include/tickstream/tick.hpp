@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include "tickstream/types/price.hpp"
+
 #include <cstdint>
 #include <iomanip>
 #include <ostream>
@@ -11,7 +13,7 @@ namespace tickstream {
 struct Tick {
   std::uint64_t seq;
   std::uint64_t exchange_ts;
-  double price;
+  types::Price price;
   std::uint32_t symbol;
   std::uint32_t qty;
   std::uint8_t side; // Bid/Ask
@@ -22,7 +24,7 @@ struct Tick {
 inline std::ostream &operator<<(std::ostream &os, const Tick &tick) {
   return os << "Tick{"
             << "seq=" << tick.seq << ", ts=" << tick.exchange_ts
-            << ", price=" << std::fixed << std::setprecision(4) << tick.price
+            << ", price=" << std::fixed << std::setprecision(4) << tick.price.raw()
             << ", symbol=" << tick.symbol << ", qty=" << tick.qty
             << ", side=" << static_cast<unsigned>(tick.side)
             << ", type=" << static_cast<unsigned>(tick.type) << '}';

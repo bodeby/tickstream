@@ -1,5 +1,6 @@
 // apps/server/src/main.cpp
 
+#include "tickstream/process/side/bernoulli.hpp"
 #include "transport/sender.hpp"
 
 // library
@@ -29,6 +30,8 @@ int main() {
   transport::Sender sender(localhost, 5000);
 
   // Tick Generation
+
+  tickstream::BernoulliProcess bernoulli({});
 
   tickstream::GBM gbm({
     .s0 = 100.0,                             // S0

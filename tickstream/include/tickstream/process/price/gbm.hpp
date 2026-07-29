@@ -3,6 +3,7 @@
 #pragma once
 
 #include "tickstream/process/process.hpp"
+#include "tickstream/types/price.hpp"
 
 #include <cmath>
 #include <random>
@@ -25,7 +26,7 @@ namespace tickstream {
 *  Process : Geometric Brownian Motion
 */
 
-class GBM final : public Process<double> {
+class GBM final : public Process<types::Price> {
 public:
   GBM(const gbm::Context &ctx)
       : s_(ctx.s0),
@@ -35,12 +36,12 @@ public:
         rng_(ctx.seed),
         normal_(0.0, 1.0) {};
 
-  double next() override {
+  types::Price next() override {
     const double z = normal_(rng_);
     const auto lhs = (mu_ - 0.5 * sigma_ * sigma_) * dt_;
     const auto rhs = sigma_ * std::sqrt(dt_) * z;
     s_ *= std::exp(lhs + rhs);
-    return s_;
+    return types::Price{s_};
   };
 
 private:
