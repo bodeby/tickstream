@@ -37,10 +37,9 @@ add_subdirectory(tickstream)
 #
 # Executables that wire libraries together (entry points only)
 
-set(TS_BUILD_APPS_DEFAULT ON)
-
-option(TS_BUILD_DEMO    "Build demo app"      ${TS_BUILD_APPS_DEFAULT})
-option(TS_BUILD_SERVER  "Builder server app"  ON)
+option(TS_BUILD_DEMO       "Build demo app"      OFF)
+option(TS_BUILD_SERVER     "Builder server app"  ON)
+option(TS_BUILD_BENCHMARKS "Build benchmarks"    ON)
 
 if (TS_BUILD_DEMO)
   add_subdirectory(apps/demo) # main entry
@@ -68,5 +67,5 @@ endif()
 option(TS_BUILD_BENCHMARKS "Build benchmarks" OFF)
 
 if (TS_BUILD_BENCHMARKS)
-  add_subdirectory(benchmarks)
+  add_subdirectory(bench)
 endif()

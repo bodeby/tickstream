@@ -3,6 +3,7 @@
 #pragma once
 
 #include "tickstream/process/process.hpp"
+#include "tickstream/types/price.hpp"
 
 #include <cmath>
 #include <random>
@@ -29,7 +30,7 @@ struct Context {
 
 namespace tickstream {
 
-class Heston final : public Process<double> {
+class Heston final : public Process<types::Price> {
 public:
   Heston(const heston::Context &ctx)
       : s_(ctx.s0),
@@ -42,7 +43,7 @@ public:
         dt_(ctx.dt),
         rng_(ctx.seed) {};
 
-  double next() override {
+  types::Price next() override {
     const double z1 = normal_(rng_);
     const double z2 = normal_(rng_);
 
@@ -55,7 +56,7 @@ public:
     v_ = std::max(v_, 0.0);
     s_ *= std::exp((mu_ - 0.5 * vp) * dt_ + std::sqrt(vp * dt_) * w1);
 
-    return s_;
+    return types::Price{s_};
   };
 
 private:

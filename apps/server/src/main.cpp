@@ -1,12 +1,12 @@
 // apps/server/src/main.cpp
 
-#include "tickstream/process/side/bernoulli.hpp"
 #include "transport/sender.hpp"
 
 // library
 #include <tickstream/generator.hpp>
 #include <tickstream/process/price/gbm.hpp>
 #include <tickstream/process/price/heston.hpp>
+#include <tickstream/process/side/bernoulli.hpp>
 #include <tickstream/tick.hpp>
 
 // STL
@@ -24,22 +24,12 @@ int main() {
   // UDP Server Setup
 
   constexpr auto localhost{"127.0.0.1"};
-  constexpr auto max_messages{10'000};
+  constexpr auto max_messages{100'000};
   constexpr auto interval{std::chrono::microseconds(50)};
 
   transport::Sender sender(localhost, 5000);
 
   // Tick Generation
-
-  tickstream::BernoulliProcess bernoulli({});
-
-  tickstream::GBM gbm({
-    .s0 = 100.0,                             // S0
-    .mu = 0.05,                              // drift
-    .sigma = 0.20,                           // volatility
-    .dt = 1.0 / (252.0 * 6.5 * 60.0 * 60.0), // one second
-    .seed = 42,
-  });
 
   tickstream::Heston heston({
     .s0 = 100.0,
@@ -53,7 +43,7 @@ int main() {
     .seed = 42,
   });
 
-  tickstream::Generator generator(std::move(gbm));
+  tickstream::Generator generator(std::move(heston));
 
   // Runtime loop
 

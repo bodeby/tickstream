@@ -47,9 +47,10 @@ ubsan:
 # Benchmarks (future)
 # ------------------------
 
-BENCH ?= domain/tx/tx_encoder_bench
+BENCH ?= gbm_benchmark
 
 bench:
 	cmake --preset release-bench
 	cmake --build --preset release-bench
-	./build/release-bench/benchmarks/$(BENCH) --benchmark_min_time=1s
+	./build/release-bench/bench/tickstream/$(BENCH) \
+		--benchmark_min_time=1s

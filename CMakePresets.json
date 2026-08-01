@@ -53,7 +53,7 @@
       "name": "release-bench",
       "inherits": "release",
       "cacheVariables": {
-        "VA_BUILD_BENCHMARKS": "ON",
+        "TS_BUILD_BENCHMARKS": "ON",
         "CMAKE_INTERPROCEDURAL_OPTIMIZATION": "OFF"
       }
     },
@@ -82,7 +82,7 @@
       "name": "debug-tests",
       "inherits": "debug",
       "cacheVariables": {
-        "VA_BUILD_TESTS": "ON"
+        "TS_BUILD_TESTS": "ON"
       }
     },
 
@@ -90,7 +90,7 @@
       "name": "asan-tests",
       "inherits": "asan",
       "cacheVariables": {
-        "VA_BUILD_TESTS": "ON"
+        "TS_BUILD_TESTS": "ON"
       }
     },
 
@@ -98,7 +98,7 @@
       "name": "ubsan-tests",
       "inherits": "ubsan",
       "cacheVariables": {
-        "VA_BUILD_TESTS": "ON"
+        "TS_BUILD_TESTS": "ON"
       }
     }
   ],
